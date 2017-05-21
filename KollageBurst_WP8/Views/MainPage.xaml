@@ -1,0 +1,72 @@
+﻿<phone:PhoneApplicationPage xmlns:UI="clr-namespace:Microsoft.Advertising.Mobile.UI;assembly=Microsoft.Advertising.Mobile.UI"  x:Class="KollageBurst_WP8.Views.MainPage"
+                            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                            xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+                            xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+                            xmlns:bar="clr-namespace:BindableApplicationBar;assembly=BindableApplicationBar"
+                            xmlns:GoogleAds="clr-namespace:GoogleAds;assembly=GoogleAds"
+                            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                            xmlns:ignore="http://www.ignore.com"
+                            mc:Ignorable="d ignore"
+                            FontFamily="{StaticResource PhoneFontFamilyNormal}"
+                            FontSize="{StaticResource PhoneFontSizeNormal}"
+                            Foreground="{StaticResource PhoneForegroundBrush}"
+                            SupportedOrientations="Portrait"
+                            Orientation="Portrait"
+                            shell:SystemTray.IsVisible="True"
+                            DataContext="{Binding Main, Source={StaticResource Locator}}">
+
+    <shell:SystemTray.ProgressIndicator>
+        <shell:ProgressIndicator IsIndeterminate="{Binding IsBusy}" 
+                                 IsVisible="{Binding IsBusy}" 
+                                 Text="{Binding Message}" />
+    </shell:SystemTray.ProgressIndicator>
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <phone:Pivot Grid.Row="0" Title="{Binding Path=LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}">
+            <!--Pivot item one-->
+            <phone:PivotItem Header="Modified">
+                <Image Source="{Binding Path=ModifiedPhoto.PhotoImage}" />
+            </phone:PivotItem>
+
+            <!--Pivot item two-->
+            <phone:PivotItem Header="Original">
+                <Image Source="{Binding Path=OriginalPhoto.PhotoImage}" />
+            </phone:PivotItem>
+        </phone:Pivot>
+        <GoogleAds:AdView Grid.Row="1"
+            AdUnitID="ca-app-pub-2198044040722697/1189075569"
+                          Format="SmartBanner"
+                          VerticalAlignment="Bottom" />
+    </Grid>
+
+    <bar:Bindable.ApplicationBar>
+        <bar:BindableApplicationBar>
+            <bar:BindableApplicationBarButton
+                Text="{Binding Path=LocalizedResources.AppBarOpenButtonText, Source={StaticResource LocalizedStrings}}"
+                IconUri="/Assets/Icons/appbar_open_dark.png"
+                Command="{Binding OpenPhotoCommand}" />
+            <bar:BindableApplicationBarButton
+                Text="{Binding Path=LocalizedResources.AppBarSaveButtonText, Source={StaticResource LocalizedStrings}}"
+                IconUri="/Assets/Icons/appbar_save_dark.png"
+                Command="{Binding SavePhotoCommand}" />
+            <bar:BindableApplicationBar.MenuItems>
+                <bar:BindableApplicationBarMenuItem
+                    Text="{Binding Path=LocalizedResources.AppBarSettingsButtonText, Source={StaticResource LocalizedStrings}}"
+                    Command="{Binding ShowSettingsCommand}" />
+                <bar:BindableApplicationBarMenuItem
+                    Text="{Binding Path=LocalizedResources.AppBarShareButtonText, Source={StaticResource LocalizedStrings}}"
+                    Command="{Binding SharePhotoCommand}" />
+                <!--<bar:BindableApplicationBarMenuItem
+                    Text="{Binding Path=LocalizedResources.AppBarAboutButtonText, Source={StaticResource LocalizedStrings}}"
+                    Command="{Binding ShowAboutPageCommand}" />-->
+            </bar:BindableApplicationBar.MenuItems>
+        </bar:BindableApplicationBar>
+    </bar:Bindable.ApplicationBar>
+</phone:PhoneApplicationPage>
